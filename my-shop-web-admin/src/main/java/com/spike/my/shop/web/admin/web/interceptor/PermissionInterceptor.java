@@ -18,15 +18,16 @@ public class PermissionInterceptor implements HandlerInterceptor {
     }
 
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-        String viewName = modelAndView.getViewName();
-        if (viewName != null && viewName.endsWith("login")) {
-            logger.info("viewName : {}", viewName);
-            TbUser tbUser = (TbUser) httpServletRequest.getSession().getAttribute(ConstantUtils.SESSION_USER);
-            if (tbUser != null) {
-                httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/main");
+        if (modelAndView != null) {
+            String viewName = modelAndView.getViewName();
+            if (viewName != null && viewName.endsWith("login")) {
+                logger.info("viewName : {}", viewName);
+                TbUser tbUser = (TbUser) httpServletRequest.getSession().getAttribute(ConstantUtils.SESSION_USER);
+                if (tbUser != null) {
+                    httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/main");
+                }
             }
         }
-
     }
 
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {

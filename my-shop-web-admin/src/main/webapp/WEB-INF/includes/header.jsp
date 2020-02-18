@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="/my_shop_web_admin_war_exploded/static/assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 <!-- iCheck -->
 <link rel="stylesheet" href="/my_shop_web_admin_war_exploded/static/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+<link rel="stylesheet" href="/my_shop_web_admin_war_exploded/static/assets/plugins/iCheck/all.css">
 <!-- JQVMap -->
 <link rel="stylesheet" href="/my_shop_web_admin_war_exploded/static/assets/plugins/jqvmap/jqvmap.min.css">
 <!-- Theme style -->
@@ -23,3 +24,5 @@
 <link rel="stylesheet" href="/my_shop_web_admin_war_exploded/static/assets/plugins/daterangepicker/daterangepicker.css">
 <!-- summernote -->
 <link rel="stylesheet" href="/my_shop_web_admin_war_exploded/static/assets/plugins/summernote/summernote-bs4.css">
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.15/css/jquery.dataTables.css">

@@ -14,4 +14,12 @@
     <artifactId>my-shop-domain</artifactId>
     <packaging>jar</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.spike</groupId>
+            <artifactId>my-shop-commons</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+    </dependencies>
+
 </project>

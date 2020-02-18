@@ -1,7 +1,10 @@
 package com.spike.my.shop.commons.dto;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
+@Data
 public class BaseResult implements Serializable {
     private Integer status;
     private String message;
@@ -30,21 +33,5 @@ public class BaseResult implements Serializable {
         baseResult.setStatus(status);
         baseResult.setMessage(message);
         return baseResult;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 }

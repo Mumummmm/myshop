@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <title>我的商城 | 用户管理</title>
@@ -53,30 +54,31 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form class="form-horizontal" action="/my_shop_web_admin_war_exploded/user/save" method="post">
+                    <form:form id="inputForm" cssClass="form-horizontal" action="/my_shop_web_admin_war_exploded/user/save" method="post" modelAttribute="tbUser">
+                        <form:hidden path="id" />
                         <div class="card-body">
                             <div class="form-group row">
-                                <label for="inputEmail" class="col-sm-2 col-form-label">邮箱</label>
+                                <label for="email" class="col-sm-2 col-form-label">邮箱</label>
                                 <div class="col-sm-10">
-                                    <input type="email" class="form-control" id="inputEmail" name="email" placeholder="请输入邮箱">
+                                    <form:input path="email" cssClass="form-control required email" placeholder="请输入邮箱"/>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="inputPassword" class="col-sm-2 col-form-label">密码</label>
+                                <label for="password" class="col-sm-2 col-form-label">密码</label>
                                 <div class="col-sm-10">
-                                    <input type="password" class="form-control" id="inputPassword" name="password" placeholder="请输入用户密码">
+                                    <form:input path="password" cssClass="form-control required" placeholder="请输入用户密码"/>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="inputUsername" class="col-sm-2 col-form-label">姓名</label>
+                                <label for="username" class="col-sm-2 col-form-label">姓名</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputUsername" name="username" placeholder="请输入姓名">
+                                    <form:input path="username" cssClass="form-control required" placeholder="请输入姓名"/>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="inputPhone" class="col-sm-2 col-form-label">电话</label>
+                                <label for="phone" class="col-sm-2 col-form-label">电话</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputPhone" name="phone" placeholder="请输入电话">
+                                    <form:input path="phone" cssClass="form-control required" placeholder="请输入电话"/>
                                 </div>
                             </div>
                         </div>
@@ -86,7 +88,7 @@
                             <button type="submit" class="btn btn-success float-right">保存修改</button>
                         </div>
                         <!-- /.card-footer -->
-                    </form>
+                    </form:form>
                 </div>
                 <!-- /.card -->
             </div>

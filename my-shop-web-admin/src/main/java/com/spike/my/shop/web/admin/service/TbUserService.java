@@ -9,4 +9,8 @@ public interface TbUserService {
     List<TbUser> selectAll();
     TbUser login(String email, String password);
     BaseResult save(TbUser tbUser);
+    TbUser getTbUser(Long id);
+    void delete(String[] idArray);
+    List<TbUser> page(Integer start, Integer length, TbUser tbUser);
+    Integer count(TbUser tbUser);
 }

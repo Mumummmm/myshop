@@ -2,6 +2,7 @@ package com.spike.my.shop.web.admin.service.impl;
 
 import com.spike.my.shop.commons.dto.BaseResult;
 import com.spike.my.shop.commons.utils.RegexpUtils;
+import com.spike.my.shop.commons.validator.BeanValidator;
 import com.spike.my.shop.domain.TbUser;
 import com.spike.my.shop.web.admin.dao.TbUserDao;
 import com.spike.my.shop.web.admin.service.TbUserService;
@@ -10,7 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TbUserServiceImpl implements TbUserService {
@@ -39,53 +42,47 @@ public class TbUserServiceImpl implements TbUserService {
 
     @Override
     public BaseResult save(TbUser tbUser) {
-        BaseResult baseResult = checkTbUser(tbUser);
-        tbUser.setUpdated(new Date());
-        tbUser.setPassword(DigestUtils.md5DigestAsHex(tbUser.getPassword().getBytes()));
+        String validator = BeanValidator.validator(tbUser);
+        if (validator != null) {
+            return BaseResult.fail(validator);
+        }
+        else {
+            tbUser.setUpdated(new Date());
+            tbUser.setPassword(DigestUtils.md5DigestAsHex(tbUser.getPassword().getBytes()));
 
-        if (baseResult.getStatus() == BaseResult.STATUS_SUCCESS) {
             if (tbUser.getId() == null) {
                 tbUser.setCreated(new Date());
                 tbUserDao.insertTbUser(tbUser);
-                baseResult.setMessage("新增成功");
             }
             else {
                 tbUserDao.update(tbUser);
-                baseResult.setMessage("保存成功");
             }
         }
 
-        return baseResult;
+        return BaseResult.success("保存用户信息成功");
     }
 
-    private BaseResult checkTbUser(TbUser tbUser) {
-        BaseResult baseResult = BaseResult.success();
+    @Override
+    public TbUser getTbUser(Long id) {
+        return tbUserDao.getById(id);
+    }
 
-        if (StringUtils.isBlank(tbUser.getEmail())) {
-            baseResult = BaseResult.fail("邮箱不能为空");
-            return baseResult;
-        }
-        if (RegexpUtils.checkEmail(tbUser.getEmail())) {
-            baseResult = BaseResult.fail("邮箱格式不对");
-            return baseResult;
-        }
-        if (StringUtils.isBlank(tbUser.getPassword())) {
-            baseResult = BaseResult.fail("密码不能为空");
-            return baseResult;
-        }
-        if (StringUtils.isBlank(tbUser.getUsername())) {
-            baseResult = BaseResult.fail("姓名不能为空");
-            return baseResult;
-        }
-        if (StringUtils.isBlank(tbUser.getPhone())) {
-            baseResult = BaseResult.fail("手机不能为空");
-            return baseResult;
-        }
-        if (RegexpUtils.checkPhone(tbUser.getPhone())) {
-            baseResult = BaseResult.fail("手机格式不对");
-            return baseResult;
-        }
+    @Override
+    public void delete(String[] idArray) {
+        tbUserDao.delete(idArray);
+    }
 
-        return baseResult;
+    @Override
+    public List<TbUser> page(Integer start, Integer length, TbUser tbUser) {
+        Map<String, Object> params = new HashMap<>(2);
+        params.put("start", start);
+        params.put("length", length);
+        params.put("tbUser", tbUser);
+        return tbUserDao.page(params);
+    }
+
+    @Override
+    public Integer count(TbUser tbUser) {
+        return tbUserDao.count(tbUser);
     }
 }

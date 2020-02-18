@@ -56,4 +56,60 @@
         WHERE
             id = #{id}
     </update>
+
+    <select id="getById" resultType="TbUser">
+        SELECT
+            <include refid="TbUserColumns"/>
+        FROM
+            tb_user a
+        WHERE
+            a.id = #{id}
+    </select>
+
+    <delete id="delete">
+        DELETE FROM
+            tb_user
+        WHERE
+            id IN
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="page" resultType="TbUser" parameterType="Map">
+        SELECT
+            <include refid="TbUserColumns"/>
+        FROM
+            tb_user AS a
+        <where>
+            <if test="tbUser.username != null and tbUser.username != ''">
+                AND a.username like CONCAT ('%', #{tbUser.username}, '%')
+            </if>
+            <if test="tbUser.email != null and tbUser.email != ''">
+                AND a.email like CONCAT ('%', #{tbUser.email}, '%')
+            </if>
+            <if test="tbUser.phone != null and tbUser.phone != ''">
+                AND a.phone like CONCAT ('%', #{tbUser.phone}, '%')
+            </if>
+        </where>
+        limit #{start}, #{length}
+    </select>
+
+    <select id="count" resultType="Integer">
+        SELECT
+            COUNT(*)
+        FROM
+            tb_user AS a
+        <where>
+            <if test="username != null and username != ''">
+                AND a.username like CONCAT ('%', #{username}, '%')
+            </if>
+            <if test="email != null and email != ''">
+                AND a.email like CONCAT ('%', #{email}, '%')
+            </if>
+            <if test="phone != null and phone != ''">
+                AND a.phone like CONCAT ('%', #{phone}, '%')
+            </if>
+        </where>
+    </select>
 </mapper>
